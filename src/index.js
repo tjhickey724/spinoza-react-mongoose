@@ -12,10 +12,17 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Container from './components/Container';
 import Pyodide from './components/PyodideJenna';
 
+
+
 // Insert CSS imports here
 import './index.css';
 import Login from './components/Login';
 import EmailLinkLogin from './components/EmailLinkLogin';
+
+// Restore user auth to last semester version which prevents user from changing url to access main function
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import Combination from './components/Combination';
 
 const pythonString = 'print()';
 
@@ -26,15 +33,17 @@ ReactDOM.render(
       <script src="testpy_jenna.js"></script>
     </Helmet>
     <Router>
+      <AuthProvider>
       <Switch>
         <Route exact path = '/'>
           <Login></Login>
         </Route>
-        <Route path='/Container'>
-          <Container/>
-          <Pyodide pythonCode={pythonString} />
-        </Route>
+        <PrivateRoute path='/ide' component={Combination}>
+          {/* <Container/>
+          <Pyodide pythonCode={pythonString} /> */}
+        </PrivateRoute>
       </Switch>
+      </AuthProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
