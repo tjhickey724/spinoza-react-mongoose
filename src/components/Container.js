@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../css/Container.css';
+import NavBar from './NavBar';
 
 const reset = (target) => {
   target.value = ""
@@ -8,7 +9,9 @@ export default function Container() {
   const [input, setInput] = useState(`print('Hello Jenna!')`);
 
   return (
+    
     <div className="Container">
+      
       <h1>Spinoza</h1>
       <br />
 
