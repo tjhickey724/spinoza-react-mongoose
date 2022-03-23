@@ -23,6 +23,7 @@ import EmailLinkLogin from './components/EmailLinkLogin';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Combination from './components/Combination';
+import Home from './components/Home';
 
 const pythonString = 'print()';
 
@@ -32,12 +33,19 @@ ReactDOM.render(
       <script src={'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js'} />
       <script src="testpy_jenna.js"></script>
     </Helmet>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
     <Router>
       <AuthProvider>
       <Switch>
         <Route exact path = '/'>
           <Login></Login>
         </Route>
+        <PrivateRoute path='/home' component={Home}></PrivateRoute>
         <PrivateRoute path='/ide' component={Combination}>
           {/* <Container/>
           <Pyodide pythonCode={pythonString} /> */}

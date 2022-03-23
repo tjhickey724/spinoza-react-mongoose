@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import '../css/Container.css';
-import NavBar from './NavBar';
 
 const reset = (target) => {
   target.value = ""
@@ -22,18 +21,18 @@ export default function Container() {
           setInput(e.target.value)
         })} />
 
-      <textarea id="2" name="2" rows="4" cols="50"
+      <textarea id="result" name="2" rows="4" cols="50"
         placeholder="Output goes here" />
       
-      <textarea id="3" name="3" rows="4" cols="50"
+      <textarea id="output" name="3" rows="4" cols="50"
         placeholder="This is the console to display standard Output" />
 
       <button onClick={async() => {
         console.log('clicked the run button')
         window.code.value = input
         await window.evaluatePython()
-        document.getElementById('2').value = window.output.value
-        document.getElementById('3').value = window.stdout.value
+        document.getElementById('result').value = window.result.value
+        document.getElementById('output').value = window.stdout.value
       }}>Run</button>
     </div>
   );

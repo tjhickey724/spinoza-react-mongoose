@@ -1,20 +1,21 @@
 const runitall = () => {
   console.log("running the testpy_jenna.js script")
-  const output = {value:""}
+  const result = {value:""}
   const code = {value:"print(23*27); 19*6"}
   const stdout = {value:""}
-  window.output = output
+  window.result = result
   window.code = code
   window.stdout = stdout
+  window.pyodideLoaded = false
 
   // window.consoleOutput = consoleOutput
   window.main = main
   window.evaluatePython = evaluatePython
 
-  const addToOutput = (s) => {
-    console.log("in addToOutput. s:", s)
-    output.value = s;
-    console.log('>>> ' + output.value)
+  const addToResult = (s) => {
+    console.log("in addToResult. s:", s)
+    result.value = s;
+    console.log('>>> ' + result.value)
   }
   const addToStdOut = (s) => {
     console.log("in addToStdOut. s:", s)
@@ -25,16 +26,21 @@ const runitall = () => {
     target.value = "";
   }
 
-  output.value = "Initializing...\n";
+  result.value = "Initializing...\n";
   let paragraph = document.getElementById("p");
 
   // init Pyodide
   async function main() {
     console.log(window)
+    if(window.pyodideLoaded) {
+      return
+    } else {
+      window.pyodideLoaded = true
+    }
     let pyodide = await loadPyodide({
       indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/",
     });
-    output.value += "Ready!\n";
+    result.value += "Ready!\n";
     return pyodide;
   }
   let pyodideReadyPromise = main();
@@ -54,7 +60,7 @@ const runitall = () => {
       // undefined but the correct output will be printed in the console.
       // Solution: set up a method for capturing pyodide's output stream when
       // result of python expression is undefined
-      reset(window.output);
+      reset(window.result);
       reset(window.stdout);
       console.log(code.value)
       let result = pyodide.runPython(code.value);
@@ -64,20 +70,20 @@ const runitall = () => {
 
       // If expression evaluates to a certain result, we update output, otherwise update stdout
       if (stdout) {
-        var div = document.createElement('div');
-        div.innerText = stdout;
-        document.body.appendChild(div);
+        // var div = document.createElement('div');
+        // div.innerText = stdout;
+        // document.body.appendChild(div);
         addToStdOut(stdout)
       } 
       if (result){
-        var div = document.createElement('div');
-        div.innerText = result
-        document.body.appendChild(div)
-        addToOutput(result);
+        // var div = document.createElement('div');
+        // div.innerText = result
+        // document.body.appendChild(div)
+        addToResult(result);
       }
 
     } catch (err) {
-      addToOutput(err);
+      addToResult(err);
     }
   }
 
