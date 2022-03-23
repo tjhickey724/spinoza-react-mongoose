@@ -6,15 +6,19 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
     "firebase": "^7.20.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +33,6 @@
     "concurrently": "^4.0.1"
   },
   "proxy": "http://localhost:5000/",
-  
   "eslintConfig": {
     "extends": [
       "react-app",
