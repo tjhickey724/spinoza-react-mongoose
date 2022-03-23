@@ -3,6 +3,7 @@ import Container from './Container';
 import Pyodide from './PyodideJenna';
 import { useAuth } from '../context/AuthContext'
 import { Link, useHistory } from "react-router-dom"
+import NavBar from "./NavBar";
 
 const pythonString = 'print()'
 
@@ -23,7 +24,7 @@ export default function Combination() {
   }
     return (
         <>
-            <button onClick={handleLogout}>Log out</button>
+            <NavBar/>
             <Container/>
             <Pyodide pythonCode={pythonString}/>
         </>

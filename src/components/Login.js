@@ -23,7 +23,7 @@ function Login() {
   const signInWithEmailAndPassword = async (email, password) => {
       try {
         await auth.signInWithEmailAndPassword(email, password);
-        history.push('/ide')
+        history.push('/home')
       } catch (err) {
         console.error(err);
         alert(err.message);
