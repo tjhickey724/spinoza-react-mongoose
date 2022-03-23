@@ -16,6 +16,7 @@ import Pyodide from './components/PyodideJenna';
 import './index.css';
 import Login from './components/Login';
 import EmailLinkLogin from './components/EmailLinkLogin';
+import App from './components/App';
 
 const pythonString = 'print()';
 
@@ -33,6 +34,9 @@ ReactDOM.render(
         <Route path='/Container'>
           <Container/>
           <Pyodide pythonCode={pythonString} />
+        </Route>
+        <Route exact path = '/app'>
+          <App></App>
         </Route>
       </Switch>
     </Router>
