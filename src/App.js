@@ -13,8 +13,13 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
+import PrivateRoute from './components/PrivateRoute';
+import Combination from './components/Combination';
+
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
+import Container from './components/Container';
+import Pyodide from './components/PyodideJenna';
 
 class App extends Component {
   constructor(props) {
@@ -96,6 +101,14 @@ class App extends Component {
                 </Link>
               </li>
             )}
+
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/ide"} className="nav-link">
+                  Ide
+                </Link>
+              </li>
+            )}
           </div>
 
           {currentUser ? (
@@ -135,6 +148,10 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/user" component={BoardUser} />
+            <Route path='/ide' component={Combination}>
+          {/* <Container/>
+          <Pyodide pythonCode={pythonString} /> */}
+        </Route>
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
           </Switch>
