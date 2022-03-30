@@ -32,43 +32,46 @@ function Login() {
 
   const emailPassword = (
     <div className="login">
-    <div className="login__container"> 
-      <div className="image">
-        <img src={loginImg} />
-      </div> 
-      <div className="form">
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            name="email"
-            className="login__textBox"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="E-mail Address"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            className="login__textBox"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
+
+      <div className="login__container"> 
+        <div className="image">
+          <img src={loginImg} />
+        </div> 
+        <div className="form">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              className="login__textBox"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="E-mail Address"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="login__textBox"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </div>
         </div>
       </div>
-    </div>
-    <div className="footer">
-      <button
-        className="login__btn"
-        onClick={() => signInWithEmailAndPassword(email, password)}
-      >
-        Login
-      </button>
-    </div>
+
+      <div className="footer">
+        <button
+          className="login__btn"
+          onClick={() => signInWithEmailAndPassword(email, password)}
+        >
+          Sign In
+        </button>
+      </div>
+
     </div>
   )
 
@@ -77,15 +80,23 @@ function Login() {
   )
 
   return (
-    <div className="login">
-      {isEmailLink ? emailLink : emailPassword}
-      <div className="footer">
-        <button 
-          className="login__btn" 
-          onClick={changeSigninMethod}>
-        {isEmailLink ? 'Use email and password' : 'Send a sign in link to your email'}
-        </button>
+    <div className="login_page">
+
+      <div className="background">
+        {isEmailLink ? emailLink : emailPassword}
+
+        <div className="footer2">
+          <div className="footer2_container">
+            {isEmailLink ? 'Already registered?' : 'Still no account?'}
+            <button 
+              className="login__btn2" 
+              onClick={changeSigninMethod}>
+            {isEmailLink ? 'Sign In' : 'Sign Up'}
+            </button>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 }
