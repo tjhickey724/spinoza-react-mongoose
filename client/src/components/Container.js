@@ -34,6 +34,18 @@ export default function Container() {
         document.getElementById('result').value = window.result.value
         document.getElementById('output').value = window.stdout.value
       }}>Run</button>
+
+      <button onClick={async () => {
+            console.log('ready to fetch')
+            const response = await fetch('/api/hello');
+            console.log('fetched') 
+            console.dir(response)       
+            const body = await response.json();
+            console.log('awaiting')
+            console.dir(body)
+            if (response.status !== 200) throw Error(body.message);
+      }}>Test Fetch</button>
+
     </div>
   );
 }
