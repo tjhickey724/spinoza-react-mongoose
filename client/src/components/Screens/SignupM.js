@@ -1,42 +1,36 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
-import { Context as AuthContext } from '../context/AuthContextMongo';
-import AuthForm from '../components/AuthForm';
-import NavLink from '../components/NavLink';
+import React, { useContext, useState } from 'react';
+import { Context as AuthContext } from '../../context/AuthContextMongo';
+import AuthForm from '../../components/AuthForm';
 
-const SignupScreen = ({ navigation }) => {
+
+const SignupM = ({ navigation }) => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    signup({email, password})
+}
 
-  return (
-    <View style={styles.container}>
-      <NavigationEvents onWillFocus={clearErrorMessage} />
-      <AuthForm
-        headerText="Sign Up for Tracker"
-        errorMessage={state.errorMessage}
-        submitButtonText="Sign Up"
-        onSubmit={signup}
-      />
-      <NavLink
-        routeName="Signin"
-        text="Already have an account? Sign in instead!"
-      />
-    </View>
+const emailHandler =(event) => {
+    event.preventDefault();
+    setEmail(event.target.value);
+  }
+  
+  const passwordHandler =(event) => {
+    event.preventDefault();
+    setPassword(event.target.value);
+  }
+    return (
+    <form onSubmit={onSubmitHandler}>
+          <input type="text" onChange={emailHandler}
+         />
+          <input type="text" onChange={passwordHandler} />
+        
+        <input type="submit" value="提交" />
+      </form>
   );
 };
 
-SignupScreen.navigationOptions = () => {
-  return {
-    header: () => false,
-  };
-};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    marginBottom: 250,
-  },
-});
-
-export default SignupScreen;
+export default SignupM;

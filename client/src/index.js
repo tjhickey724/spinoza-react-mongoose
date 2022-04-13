@@ -20,13 +20,13 @@ import Login from './components/Login';
 import EmailLinkLogin from './components/EmailLinkLogin';
 
 // Restore user auth to last semester version which prevents user from changing url to access main function
-import { AuthProvider } from './context/AuthContext';
+// import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Combination from './components/Combination';
 
-import LoginM from './components/screens/LoginM';
-import SignupM from './components/screens/SignupM';
-
+import LoginM from './components/Screens/LoginM';
+import SignupM from './components/Screens/SignupM';
+import { Provider as AuthProvider } from './context/AuthContextMongo';
 
 const pythonString = 'print()';
 
@@ -57,11 +57,11 @@ ReactDOM.render(
           <SignupM></SignupM>
         </Route>
 
-        <PrivateRoute path='/home' component={Home}></PrivateRoute>
+        {/* <PrivateRoute path='/home' component={Home}></PrivateRoute>
         <PrivateRoute path='/ide' component={Combination}>
           {/* <Container/>
           <Pyodide pythonCode={pythonString} /> */}
-        </PrivateRoute>
+        {/* </PrivateRoute> */}
       </Switch>
       </AuthProvider>
     </Router>
