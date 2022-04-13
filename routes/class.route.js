@@ -43,8 +43,10 @@ async (req,res,next) => {
     const {name,code,semester} = req.body; 
 
     let data = {name,code,semester} 
-    let item = new Class(data) 
-    await item.save() 
+    let item = new Class(data)
+    res.locals.classess = items; 
+    await item.save();
+    
     res.redirect('/class')  
   } catch (e){
     next(e);
