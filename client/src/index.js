@@ -23,7 +23,10 @@ import EmailLinkLogin from './components/EmailLinkLogin';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import Combination from './components/Combination';
-import Home from './components/Home';
+
+import LoginM from './components/screens/LoginM';
+import SignupM from './components/screens/SignupM';
+
 
 const pythonString = 'print()';
 
@@ -45,6 +48,15 @@ ReactDOM.render(
         <Route exact path = '/'>
           <Login></Login>
         </Route>
+
+        <Route exact path = '/login'>
+          <LoginM></LoginM>
+        </Route>
+
+        <Route exact path = '/signup'>
+          <SignupM></SignupM>
+        </Route>
+
         <PrivateRoute path='/home' component={Home}></PrivateRoute>
         <PrivateRoute path='/ide' component={Combination}>
           {/* <Container/>
