@@ -1,0 +1,17 @@
+
+<ol>
+    <% for (class of classes){%>
+        <li class="mb-2">          
+            <i><%= class.name %></i>
+            <i><%= class.code %></i>
+            <i><%= class.semester %></i>
+        </li>
+    <% }%>
+</ol>
+
+<div>Create New Class</div>
+<form method="post" action="/class/add">
+    name:<input type="text" name="name"><br>
+    code:<input type="text" name="code"><br>
+    semester:<input type="submit" value="semester"><br>
+</form>
