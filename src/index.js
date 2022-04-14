@@ -8,16 +8,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 // import PyIDE from './components/pyodide'
 // import Pyodide from './components/PyodideAll';
 
-// Note: imports changed based on Jenna's tests :)
-import Container from './components/Container';
-import Pyodide from './components/PyodideJenna';
-
 
 
 // Insert CSS imports here
 import './index.css';
 import Login from './components/Login';
-import EmailLinkLogin from './components/EmailLinkLogin';
 
 // Restore user auth to last semester version which prevents user from changing url to access main function
 import { AuthProvider } from './context/AuthContext';
@@ -25,7 +20,6 @@ import PrivateRoute from './components/PrivateRoute';
 import Combination from './components/Combination';
 import Home from './components/Home';
 
-const pythonString = 'print()';
 
 ReactDOM.render(
   <React.StrictMode>
