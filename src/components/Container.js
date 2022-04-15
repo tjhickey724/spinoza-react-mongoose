@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import '../css/Container.css';
 
-const reset = (target) => {
-  target.value = ""
-}
 export default function Container() {
   const [input, setInput] = useState(`print('Hello Jenna!')`);
 

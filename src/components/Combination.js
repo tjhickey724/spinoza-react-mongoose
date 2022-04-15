@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Container from './Container';
 import Pyodide from './PyodideJenna';
 import { useAuth } from '../context/AuthContext'
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import NavBar from "./NavBar";
 
 const pythonString = 'print()'

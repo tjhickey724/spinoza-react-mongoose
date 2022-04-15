@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import {Helmet} from "react-helmet";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-// Insert Component imports here
-// import App from './components/App';
-// import PyIDE from './components/pyodide'
-// import Pyodide from './components/PyodideAll';
-
-
 
 // Insert CSS imports here
 import './index.css';
@@ -55,3 +49,55 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// Connect with mongoDB database
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/', {
+    dbName: 'Spinoza',
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, err => err ? console.log(err) : 
+    console.log('Connected to Spinoza database'));
+
+// Schema for clases
+const ClassSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  semester: {
+    type: String,
+    required: true,
+  },
+  createTime: {
+    type: Date,
+    default:Date.now
+  }
+});
+
+const Class = mongoose.model('classes', ClassSchema);
+Class.createIndexes();
+
+// For backend and express
+const express = require('express');
+const app = express();
+const cors = require("cors");
+console.log("App listen at port 5000");
+app.use(express.json());
+app.use(cors());
+app.get("/home", (req, resp) => {
+
+    resp.send("App is Working");
+    // You can check backend is working or not by 
+    // entering http://loacalhost:5000
+    
+    // If you see App is working means
+    // backend working properly
+});
+
+app.listen(5000);
