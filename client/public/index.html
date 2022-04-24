@@ -24,6 +24,21 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
+
+    <script type="text/javascript">
+      async function main(){
+        let pyodide = await loadPyodide();
+        window.pyodide=pyodide
+        console.log(pyodide.runPython(`
+            import sys
+            sys.version
+        `));
+        console.log(pyodide.runPython("print(1 + 2)"));
+      }
+      main();
+    </script>
+
     <title>React App</title>
   </head>
   <body>

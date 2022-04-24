@@ -15,7 +15,7 @@ export default function Pyodide({ pythonCode,
 
   // Note: this is not a super efficient solution. It works, but definitely needs optimizing.
   useEffect(async () => {
-    console.log("in useEffect")
+    console.log("in PyodideJenna useEffect")
     try {
       await window.runitall()
     } catch(e) {
