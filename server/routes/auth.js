@@ -119,7 +119,8 @@ router.post('/spinoza/login',
       const {username,passphrase} = req.body
       const user = await User.findOne({username:username})
       const isMatch = await bcrypt.compare(passphrase,user.passphrase );
-
+      console.log('in /spinoza/log')
+      console.dir([username,passphrase,isMatch])
       if (isMatch) {
         req.session.username = username //req.body
         req.session.user = user

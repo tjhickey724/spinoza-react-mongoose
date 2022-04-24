@@ -11,6 +11,7 @@ import './index.css';
 //import PythonIDE from './components/PythonIDE'
 import Home from './components/Home';
 import About from './components/About'
+import Login from './components/Login'
 
 const data =
     {userId:"6265a168afa2c03242dcbc01",
@@ -34,6 +35,8 @@ ReactDOM.render(
         <Switch>
           <Route exact path='/' component={Home}></Route>
           <Route path='/about' component={About}></Route>
+          <Route path='/login' component={Login}></Route>
+        
         </Switch>
       </Router>
     </ValueProvider>

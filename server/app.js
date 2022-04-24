@@ -136,6 +136,7 @@ app.post('/spinoza/log',
     try {
       console.log('inside /spinoza/log')
       const {userId,code}=req.body 
+      console.dir(req.body)
       console.log('userId='+userId)
       const user = await User.findOne({_id:userId})
       if (!user){
