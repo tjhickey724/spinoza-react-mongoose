@@ -2,20 +2,20 @@ import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { Link, NavLink, useHistory } from 'react-router-dom'
 import React, { useState } from "react";
 //import Container from './Container';
-import { useAuth } from '../context/AuthContext'
+//import { useAuth } from '../context/AuthContext'
 
 
 
 export default function NavBar(){
 
     const [error, setError] = useState("")
-    const { currentUser, logout } = useAuth()
+    //const { currentUser, logout } = useAuth()
     const history = useHistory()
 
     async function handleLogout() {
         setError("")
         try {
-        await logout()
+        //await logout()
         history.push("/")
         } catch {
         setError("Failed to log out")

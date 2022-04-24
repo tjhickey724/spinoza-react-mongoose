@@ -3,30 +3,29 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import {Helmet} from "react-helmet";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-// import { Route, Redirect } from "react-router-dom"
 // Insert Component imports here
 // import App from './components/App';
 // import PyIDE from './components/pyodide'
 // import Pyodide from './components/PyodideAll';
 
 // Note: imports changed based on Jenna's tests :)
-// import Container from './components/Container';
-// import Pyodide from './components/PyodideJenna';
+import Container from './components/Container';
+import Pyodide from './components/PyodideJenna';
 
 
 
 // Insert CSS imports here
 import './index.css';
 import Login from './components/Login';
-// import EmailLinkLogin from './components/EmailLinkLogin';
+import EmailLinkLogin from './components/EmailLinkLogin';
 
 // Restore user auth to last semester version which prevents user from changing url to access main function
-//import { AuthProvider } from './context/AuthContext';
-//import PrivateRoute from './components/PrivateRoute';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
 import Combination from './components/Combination';
 import Home from './components/Home';
 
-// const pythonString = 'print()';
+const pythonString = 'print()';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -41,16 +40,18 @@ ReactDOM.render(
       crossorigin="anonymous"
     />
     <Router>
+      <AuthProvider>
       <Switch>
         <Route exact path = '/'>
           <Login></Login>
         </Route>
-        <Route path='/home' component={Home}></Route>
-        <Route path='/ide' component={Combination}>
+        <PrivateRoute path='/home' component={Home}></PrivateRoute>
+        <PrivateRoute path='/ide' component={Combination}>
           {/* <Container/>
           <Pyodide pythonCode={pythonString} /> */}
-        </Route>
+        </PrivateRoute>
       </Switch>
+      </AuthProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
