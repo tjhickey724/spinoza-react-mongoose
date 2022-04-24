@@ -27,7 +27,7 @@ const User = require('../models/User')
 router.use(function(req, res, next) {
   console.log(`${req.method} ${req.url} ${new Date()}`);
   next();
-});
+});   
 
 
 router.use((req,res,next) => {
@@ -113,7 +113,7 @@ router.get('/logout', (req,res) => {
 /*
    signing in and logging in from a React client
 */
-router.post('/loginFromClient',
+router.post('/spinoza/login',
   async (req,res,next) => {
     try {
       const {username,passphrase} = req.body
@@ -132,7 +132,7 @@ router.post('/loginFromClient',
     }
   })
 
-router.post('/signupFromClient',
+router.post('/spinoza/signup',
   async (req,res,next) =>{
     try {
       const {username,passphrase,passphrase2,age} = req.body

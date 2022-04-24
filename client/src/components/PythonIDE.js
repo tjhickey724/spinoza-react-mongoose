@@ -7,18 +7,21 @@
   which is done by the Helmet component in index.js
 */
 import { useState } from 'react';
+import {useValue} from './ValueContext';
 import '../css/PythonIDE.css';
 
-export default function Container() {
+export default function PythonIDE() {
   const [input, setInput] = useState(`print('Hello Jenna!')`);
+  const {currentValue} = useValue();
 
   return (
 
     <div className="Container">
       
       <h1>Spinoza</h1>
+      <p>userId = {currentValue.userId} </p>
       <br />
-
+      
       <textarea id="1" name="1" rows="4" cols="50"
         placeholder={input}
         onChange={((e) => {
@@ -31,8 +34,10 @@ export default function Container() {
       
       <textarea id="output" name="3" rows="4" cols="50"
         placeholder="This is the console to display standard Output" />
-
-      <button onClick={async() => {
+      <br/>
+      <button 
+       class="btn btn-lg btn-danger"
+       onClick={async() => {
         console.log('clicked the run button')
        
         console.dir(window.pyodide)
@@ -47,24 +52,28 @@ export default function Container() {
         // then we evaluate the input 
         let result = window.pyodide.runPython(input)
         let output = window.pyodide.runPython("sys.stdout.getvalue()")
-        console.log("the result is "+result)
-        console.log("and the output is "+output)
+
         // await window.evaluatePython()
         document.getElementById('result').value = result
         document.getElementById('output').value = output
-     
+
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(
+            { userId:currentValue.userid, 
+              code:input}),
+        };
+        const response = 
+          await fetch('/spinoza/log', 
+                      requestOptions)
+        const responsedata= await response.json()
+
+        console.log('reponsedata=')
+        console.dir(responsedata)
       }}>Run</button>
 
-      <button onClick={async () => {
-            console.log('ready to fetch')
-            const response = await fetch('/api/hello');
-            console.log('fetched') 
-            console.dir(response)       
-            const body = await response.json();
-            console.log('awaiting')
-            console.dir(body)
-            if (response.status !== 200) throw Error(body.message);
-      }}>Test Fetch</button>
+
 
     </div>
   );

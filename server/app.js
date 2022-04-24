@@ -14,7 +14,7 @@ const session = require("express-session"); // to handle sessions using cookies
 const bodyParser = require("body-parser"); // to handle HTML form input
 const debug = require("debug")("personalapp:server"); 
 const layouts = require("express-ejs-layouts");
-
+const cors = require('cors')
 
 
 // *********************************************************** //
@@ -25,7 +25,7 @@ const mongoose = require( 'mongoose' );
 const mongodb_URI = 'mongodb://localhost:27017/cs103a'
 //const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
-mongoose.connect( mongodb_URI, { useNewUrlParser: true } );
+mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {console.log("we are connected!!!")});
@@ -40,10 +40,23 @@ db.once('open', function() {console.log("we are connected!!!")});
 // a server that respond to requests by sending responses
 // *********************************************************** //
 const app = express();
-
+//app.use(cors);
 // Here we specify that we will be using EJS as our view engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+
+// app.post('/spinoza/log',
+//   async (req,res,next) => {
+//     try {
+//       console.log('logging')
+//       console.dir(req.body)
+//       res.json({success:true,msg:'it worked'})
+//     }catch(error){
+//       next(error)
+//     }
+//   }
+// )
+
 
 
 
@@ -51,6 +64,8 @@ app.set("view engine", "ejs");
 // so we don't have to repeat the headers and footers on every page ...
 // the layout is in views/layout.ejs
 app.use(layouts);
+
+
 
 // Here we process the requests so they are easy to handle
 app.use(express.json());
@@ -74,10 +89,11 @@ app.use(
 //  Defining the routes the Express server will respond to
 // *********************************************************** //
 
-
 // here is the code which handles all /login /signin /logout routes
 const auth = require('./routes/auth')
 app.use(auth)
+
+
 
 // middleware to test is the user is logged in, and if not, send them to the login page
 const isLoggedIn = (req,res,next) => {
@@ -118,6 +134,7 @@ const Log = require('./models/Log')
 app.post('/spinoza/log',
   async (req,res,next) => {
     try {
+      console.log('inside /spinoza/log')
       const {userId,code}=req.body 
       console.log('userId='+userId)
       const user = await User.findOne({_id:userId})
@@ -133,6 +150,7 @@ app.post('/spinoza/log',
       res.json({success:false,msg:error.message})
     }
   })
+
 
 
 // here we catch 404 errors and forward to error handler

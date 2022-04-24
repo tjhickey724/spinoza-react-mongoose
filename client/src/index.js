@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 //import reportWebVitals from './reportWebVitals';
 import {Helmet} from "react-helmet";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-
+import ValueProvider from './components/ValueContext';
  
 // Insert CSS imports here
 import './index.css';
@@ -11,6 +11,10 @@ import './index.css';
 //import PythonIDE from './components/PythonIDE'
 import Home from './components/Home';
 import About from './components/About'
+
+const data =
+    {userId:"6265a168afa2c03242dcbc01",
+   }
 
 // const pythonString = 'print()';
 
@@ -25,12 +29,14 @@ ReactDOM.render(
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <Router>
-      <Switch>
-        <Route exact path='/' component={Home}></Route>
-        <Route path='/about' component={About}></Route>
-      </Switch>
-    </Router>
+    <ValueProvider value={data}>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Home}></Route>
+          <Route path='/about' component={About}></Route>
+        </Switch>
+      </Router>
+    </ValueProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
