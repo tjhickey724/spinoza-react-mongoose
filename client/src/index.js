@@ -1,31 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals';
+//import reportWebVitals from './reportWebVitals';
 import {Helmet} from "react-helmet";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-// import { Route, Redirect } from "react-router-dom"
-// Insert Component imports here
-// import App from './components/App';
-// import PyIDE from './components/pyodide'
-// import Pyodide from './components/PyodideAll';
 
-// Note: imports changed based on Jenna's tests :)
-// import Container from './components/Container';
-// import Pyodide from './components/PyodideJenna';
-
-
-
+ 
 // Insert CSS imports here
 import './index.css';
-//import Login from './components/Login';
-// import EmailLinkLogin from './components/EmailLinkLogin';
 
-// Restore user auth to last semester version which prevents user from changing url to access main function
-//import { AuthProvider } from './context/AuthContext';
-//import PrivateRoute from './components/PrivateRoute';
-import Combination from './components/Combination';
-import PythonIDE from './components/PythonIDE'
+//import PythonIDE from './components/PythonIDE'
 import Home from './components/Home';
+import About from './components/About'
 
 // const pythonString = 'print()';
 
@@ -33,7 +18,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Helmet>
       <script src={"https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"}/>
-      <scriptz src="attach_pyodide.js"></scriptz>
     </Helmet>
     <link
       rel="stylesheet"
@@ -43,15 +27,8 @@ ReactDOM.render(
     />
     <Router>
       <Switch>
-        {/* <Route exact path = '/'>
-          <Login></Login>
-        </Route> */}
-        <Route exact path='/' component={PythonIDE}></Route>
-        <Route path='/home' component={Home}></Route>
-        <Route path='/ide' component={Combination}>
-          {/* <Container/>
-          <Pyodide pythonCode={pythonString} /> */}
-        </Route>
+        <Route exact path='/' component={Home}></Route>
+        <Route path='/about' component={About}></Route>
       </Switch>
     </Router>
   </React.StrictMode>,
@@ -61,4 +38,4 @@ ReactDOM.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+//reportWebVitals(console.log);

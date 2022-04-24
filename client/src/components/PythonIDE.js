@@ -7,16 +7,13 @@
   which is done by the Helmet component in index.js
 */
 import { useState } from 'react';
-import '../css/Container.css';
+import '../css/PythonIDE.css';
 
-const reset = (target) => {
-  target.value = ""
-}
 export default function Container() {
   const [input, setInput] = useState(`print('Hello Jenna!')`);
 
   return (
-    
+
     <div className="Container">
       
       <h1>Spinoza</h1>
@@ -37,20 +34,10 @@ export default function Container() {
 
       <button onClick={async() => {
         console.log('clicked the run button')
-        //window.code.value = input
-        const indexURL=
-            'https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js'
-
-        if (!window.pyodide) {
-            console.log('loading pyodide')
-            console.log('window.loadPyodide=')
-            console.dir(window.loadPyodide)
-            window.pyodide = 
-              await window.loadPyodide()
-            console.log('pyodide loaded')
-        }
+       
         console.dir(window.pyodide)
         console.log('calculating result')
+        
         // first we redirect studout to a string
         window.pyodide.runPython(`
         import sys
