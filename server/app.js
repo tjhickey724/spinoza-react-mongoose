@@ -113,6 +113,26 @@ app.get('/api/hello',
     res.json({'result':new Date()})
   })
 
+const Log = require('./models/Log')
+
+app.post('/spinoza/log',
+  async (req,res,next) => {
+    try {
+      const {userId,code}=req.body 
+      console.log('userId='+userId)
+      const user = await User.findOne({_id:userId})
+      if (!user){
+        res.json({success:false,msg:"no such user"})
+      }else{
+        let createdAt = new Date()
+        let log = new Log({userId,code,createdAt})
+        await log.save()
+        res.json({success:true})
+      }
+    } catch(error){
+      res.json({success:false,msg:error.message})
+    }
+  })
 
 
 // here we catch 404 errors and forward to error handler
@@ -141,6 +161,7 @@ app.set("port", port);
 
 // and now we startup the server listening on that port
 const http = require("http");
+const User = require("./models/User");
 const server = http.createServer(app);
 
 server.listen(port);

@@ -1,13 +1,31 @@
+/*
+  auth.js uses bcrypt and salt to encode passwords ...
+
+  This router defines the following routes
+  /signin (post)
+  /login (get and post)
+  /logout (get)
+
+  When the user logs in or signs in, 
+  it adds their user name and user object to the req.session for use in the app.js controller
+  and it sets the res.locals properties for use in the view
+  res.locals.loggedIn
+  res.local.username
+  res.locals.user
+*/
+
 const express = require('express');
 const router = express.Router();
-const crypto = require('crypto')
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 const User = require('../models/User')
+
 
 
 // This is an example of middleware
 // where we look at a request and process it!
 router.use(function(req, res, next) {
-  console.log(`${req.method} ${req.url}`);
+  console.log(`${req.method} ${req.url} ${new Date()}`);
   next();
 });
 
@@ -34,18 +52,16 @@ router.post('/login',
   async (req,res,next) => {
     try {
       const {username,passphrase} = req.body
-      const hash = crypto.createHash('sha256');
-      hash.update(passphrase);
-      const encrypted = hash.digest('hex')
-      const user = await User.findOne({username:username,passphrase:encrypted})
+      const user = await User.findOne({username:username})
+      const isMatch = await bcrypt.compare(passphrase,user.passphrase );
 
-      if (user) {
+      if (isMatch) {
         req.session.username = username //req.body
         req.session.user = user
         res.redirect('/')
       } else {
         req.session.username = null
-        req.session.user = user
+        req.session.user = null
         res.redirect('/login')
       }
     }catch(e){
@@ -60,20 +76,29 @@ router.post('/signup',
       if (passphrase != passphrase2){
         res.redirect('/login')
       }else {
-        const hash = crypto.createHash('sha256');
-        hash.update(passphrase);
-        const encrypted = hash.digest('hex')
+        const encrypted = await bcrypt.hash(passphrase, saltRounds);
+
+        // check to make sure that username is not already taken!!
+        const duplicates = await User.find({username})
         
-        const user = new User(
-          {username:username,
-           passphrase:encrypted,
-           age:age
-          })
+        if (duplicates.length>0){
+          // it would be better to render a page with an error message instead of this plain text response
+          res.send("username has already been taken, please go back and try another username")
+        }else {
+          // the username has not been taken so create a new user and store it in the database
+          const user = new User(
+            {username:username,
+             passphrase:encrypted,
+             age:age
+            })
+          
+          await user.save()
+          req.session.username = user.username
+          req.session.user = user
+          res.redirect('/')
+        }
         
-        await user.save()
-        req.session.username = user.username
-        req.session.user = user
-        res.redirect('/')
+        
       }
     }catch(e){
       next(e)
@@ -84,5 +109,72 @@ router.get('/logout', (req,res) => {
   req.session.destroy()
   res.redirect('/');
 })
+
+/*
+   signing in and logging in from a React client
+*/
+router.post('/loginFromClient',
+  async (req,res,next) => {
+    try {
+      const {username,passphrase} = req.body
+      const user = await User.findOne({username:username})
+      const isMatch = await bcrypt.compare(passphrase,user.passphrase );
+
+      if (isMatch) {
+        req.session.username = username //req.body
+        req.session.user = user
+        res.json({success:true, userId:user.id})
+      } else {
+        res.json({success:false, userId:null})
+      }
+    }catch(e){
+      next(e)
+    }
+  })
+
+router.post('/signupFromClient',
+  async (req,res,next) =>{
+    try {
+      const {username,passphrase,passphrase2,age} = req.body
+      if (passphrase != passphrase2){
+        res.json({
+          success:false, 
+          userId:null, 
+          msg:'passwords do not match'
+        })
+      }else {
+        const encrypted = await bcrypt.hash(passphrase, saltRounds);
+
+        // check to make sure that username is not already taken!!
+        const duplicates = await User.find({username})
+        
+        if (duplicates.length>0){
+          // it would be better to render a page with an error message instead of this plain text response
+          res.json({
+            success:false, 
+            userId:null, 
+            msg:'user already exists'
+          })
+        }else {
+          // the username has not been taken so create a new user and store it in the database
+          const user = new User(
+            {username:username,
+             passphrase:encrypted,
+             age:age
+            })
+          
+          await user.save()
+          res.json({
+            success:true, 
+            userId:user.id, 
+          })
+        }
+        
+        
+      }
+    }catch(e){
+      next(e)
+    }
+  })
 
 module.exports = router;
