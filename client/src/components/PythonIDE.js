@@ -1,3 +1,11 @@
+/*
+  Python Container --
+  this component will evaluate Python code entered
+  by the user in a textarea and will print the result
+  and the output in corresponding textareas.
+  It relies on the pyodide being loaded in the head
+  which is done by the Helmet component in index.js
+*/
 import { useState } from 'react';
 import '../css/Container.css';
 
@@ -56,7 +64,7 @@ export default function Container() {
         console.log("and the output is "+output)
         // await window.evaluatePython()
         document.getElementById('result').value = result
-        // document.getElementById('output').value = window.stdout.value
+        document.getElementById('output').value = output
      
       }}>Run</button>
 

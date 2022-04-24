@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Container from './Container';
-import Pyodide from './PyodideJenna';
+//import Pyodide from './OLD/PyodideJenna';
 //import { useAuth } from '../context/AuthContext'
 import { useHistory } from "react-router-dom"
 import NavBar from "./NavBar";
@@ -26,7 +26,7 @@ export default function Combination() {
         <>
             <NavBar/>
             <Container/>
-            <Pyodide pythonCode={pythonString}/>
+            {/* <Pyodide pythonCode={pythonString}/> */}
         </>
     )
 }

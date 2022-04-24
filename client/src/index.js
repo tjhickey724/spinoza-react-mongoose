@@ -24,7 +24,7 @@ import './index.css';
 //import { AuthProvider } from './context/AuthContext';
 //import PrivateRoute from './components/PrivateRoute';
 import Combination from './components/Combination';
-import Container2 from './components/Container2'
+import PythonIDE from './components/PythonIDE'
 import Home from './components/Home';
 
 // const pythonString = 'print()';
@@ -33,7 +33,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Helmet>
       <script src={"https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"}/>
-      <script src="attach_pyodide.js"></script>
+      <scriptz src="attach_pyodide.js"></scriptz>
     </Helmet>
     <link
       rel="stylesheet"
@@ -46,7 +46,7 @@ ReactDOM.render(
         {/* <Route exact path = '/'>
           <Login></Login>
         </Route> */}
-        <Route exact path='/' component={Container2}></Route>
+        <Route exact path='/' component={PythonIDE}></Route>
         <Route path='/home' component={Home}></Route>
         <Route path='/ide' component={Combination}>
           {/* <Container/>
